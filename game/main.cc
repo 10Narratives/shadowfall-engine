@@ -1,39 +1,29 @@
-#include <SDL3/SDL.h>
-#include <SDL3/SDL_events.h>
-#include <SDL3/SDL_init.h>
-#include <SDL3/SDL_surface.h>
-#include <SDL3/SDL_video.h>
-
+#include <exception>
 #include <iostream>
 
+#include "raylib.h"
+
 int main() {
-  if (!SDL_Init(SDL_INIT_VIDEO)) {
-    std::cerr << "Can not initialize SDL3 library.\n";
-    return -1;
-  }
+  try {
+    const int screen_width = 800;
+    const int screen_height = 450;
 
-  SDL_Window* window = SDL_CreateWindow("Dungeon Legends", 500, 500, SDL_WINDOW_MAXIMIZED);
-  if (!window) {
-    std::cerr << "Cant not initialize SDL_Window\n";
-    return -1;
-  }
+    InitWindow(screen_width, screen_width, "Hello, World!");
 
-  SDL_Surface* window_surface = SDL_GetWindowSurface(window);
+    while (!WindowShouldClose()) {
+      BeginDrawing();
 
-  bool is_open = true;
-  SDL_Event event;
-  while (is_open) {
-    while (SDL_PollEvent(&event)) {
-      if (event.type == SDL_EVENT_QUIT) {
-        is_open = false;
-      }
+      ClearBackground(RAYWHITE);
+      DrawText("Hello, World!", 190, 200, 20, LIGHTGRAY);
+
+      EndDrawing();
     }
 
-    SDL_UpdateWindowSurface(window);
+    CloseWindow();
+
+  } catch (const std::exception& err) {
+    std::cout << err.what() << "\n";
+    return -1;
   }
-
-  SDL_DestroyWindow(window);
-  SDL_Quit();
-
   return 0;
 }

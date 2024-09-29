@@ -1,2 +1,3 @@
-add_executable(DungeonLegends main.cc)
-target_link_libraries(DungeonLegends SDL3::SDL3)
+find_package(raylib 4 REQUIRED)
+add_executable(test main.cc)
+target_link_libraries(test raylib)
