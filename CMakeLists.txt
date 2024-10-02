@@ -7,5 +7,5 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
 
 find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3)
 
-add_subdirectory(Engine)
+add_subdirectory(engine)
 add_subdirectory(game)
