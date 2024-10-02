@@ -1,0 +1,2 @@
+add_executable(ComponentCollectionTesting component-collection.cc)
+target_link_libraries(ComponentCollectionTesting engine Catch2::Catch2)

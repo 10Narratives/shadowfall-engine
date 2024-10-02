@@ -9,3 +9,5 @@ find_package(SDL3 REQUIRED CONFIG REQUIRED COMPONENTS SDL3)
 
 add_subdirectory(engine)
 add_subdirectory(game)
+
+add_subdirectory(testing)
