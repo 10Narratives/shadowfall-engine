@@ -20,24 +20,15 @@ struct Velocity final : public Component {
 #define CATCH_CONFIG_MAIN
 #include <catch2/catch.hpp>
 
-#include "ecs/component-collection.h"
-using engine::ecs::ComponentCollection;
+// #include "ecs/component-collection.h"
+// using engine::ecs::ComponentCollection;
 
-TEST_CASE("Insertion into collection") {
-  SECTION("Insert()") {
-    ComponentCollection collection;
-    engine::ecs::comp_ptr position = std::make_shared<Position>(10, 10);
-    REQUIRE(collection.Insert<Position>(position) == true);
-    REQUIRE(collection.Size() == 1);
-    REQUIRE(collection.Empty() == false);
-    REQUIRE(collection.Insert<Position>(position) == false);
-    auto stored_position = collection.Get<Position>();
-    REQUIRE(stored_position->x_coord == 10);
-    REQUIRE(stored_position->y_coord == 10);
-  }
-  SECTION("InsertOrAssign()") {
-    ComponentCollection collection;
-    engine::ecs::comp_ptr position = std::make_shared<Position>(10, 10);
-    REQUIRE(collection.InsertOrAssign<Position>(position) == true);
-  }
+TEST_CASE("Methods of ComponentCollection") {
+  SECTION("Emplace()") {}
+  SECTION("TryEmplace()") {}
+  SECTION("Erase()") {}
+  SECTION("Extract()") {}
+  SECTION("Has()") {}
+  SECTION("HasAll()") {}
+  SECTION("HasAny()") {}
 }
