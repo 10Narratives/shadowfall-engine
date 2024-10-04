@@ -1,32 +1,26 @@
 #pragma once
 
-#include <chrono>
-#include <thread>
+#include <cstddef>
+#include <string>
 namespace engine::ecs {
-
-using ecs_clock = std::chrono::high_resolution_clock;
-using ecs_time_point = std::chrono::time_point<ecs_clock>;
 
 class EntityID final {
  public:
-  EntityID();
+  EntityID();  // Constructor
 
-  [[nodiscard]] std::thread::id GetThreadID() const noexcept;
+  // Retrieves inner data of EntityID
+  [[nodiscard]] std::string GetInnerData() const noexcept;
 
-  [[nodiscard]] ecs_time_point GetTimePoint() const noexcept;
+  // Retrieves root id
+  static EntityID GetRootID() noexcept;
 
-  [[nodiscard]] bool operator<=>(const EntityID& other) const noexcept = default;
-
-  struct Hash {
+  struct Hash final {
    public:
     [[nodiscard]] std::size_t operator()(const EntityID& id) const noexcept;
   };
 
-  [[nodiscard]] static EntityID GetRootID() noexcept;
-
  private:
-  std::thread::id thread_id_;
-  ecs_time_point time_point_;
+  std::string inner_data_;
 };
 
 }  // namespace engine::ecs

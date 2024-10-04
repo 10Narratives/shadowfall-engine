@@ -1,28 +1,32 @@
 #include "ecs/entity-id.h"
 
 #include <chrono>
+#include <cstddef>
 #include <functional>
+#include <sstream>
 #include <thread>
 using engine::ecs::EntityID;
 
 EntityID::EntityID() {
-  thread_id_ = std::this_thread::get_id();
-  time_point_ = ecs_clock::now();
+  std::stringstream stream;
+  stream << std::this_thread::get_id();
+
+  stream << ".";
+
+  auto now = std::chrono::high_resolution_clock::now();
+  auto duration = now.time_since_epoch();
+  stream << std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
+  inner_data_ = stream.str();
 }
 
-std::thread::id EntityID::GetThreadID() const noexcept { return thread_id_; }
-
-engine::ecs::ecs_time_point EntityID::GetTimePoint() const noexcept { return time_point_; }
-
-std::size_t EntityID::Hash::operator()(const EntityID& id) const noexcept {
-  auto duration = id.time_point_.time_since_epoch();
-  auto nanoseconds = std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
-  return std::hash<std::int64_t>{}(nanoseconds) ^ std::hash<std::thread::id>{}(id.thread_id_);
-}
+std::string EntityID::GetInnerData() const noexcept { return inner_data_; }
 
 EntityID EntityID::GetRootID() noexcept {
-  EntityID root_id;
-  root_id.thread_id_ = std::thread::id{};
-  root_id.time_point_ = ecs_clock::from_time_t(0);
+  EntityID root_id{};
+  root_id.inner_data_.clear();
   return root_id;
+}
+
+std::size_t EntityID::Hash::operator()(const EntityID& id) const noexcept {
+  return std::hash<std::string>{}(id.inner_data_);
 }
