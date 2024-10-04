@@ -1,5 +1,7 @@
 #include <exception>
+#include <ios>
 #include <iostream>
+#include <sstream>
 
 #include "ecs/component.h"
 using engine::ecs::Component;
@@ -23,6 +25,14 @@ struct Velocity final : public Component {
 #include "ecs/component-collection.h"
 using engine::ecs::ComponentCollection;
 
+#include "ecs/archetype.h"
+using engine::ecs::Archetype;
+
+using Placeable = Archetype<Position, Velocity>;
+
+#include "ecs/entity-id.h"
+using engine::ecs::EntityID;
+
 int main() {
   try {
     ComponentCollection collection;
@@ -32,6 +42,27 @@ int main() {
       std::cout << "Position: {" << tmp->x_coord << ", " << tmp->y_coord << "}\n";
     }
     std::cout << std::boolalpha << collection.Has<Position>() << "\n";
+
+    std::cout << std::boolalpha << Placeable::IsPresentedIn(collection) << "\n";
+    Placeable::Supplement(collection);
+    std::cout << std::boolalpha << Placeable::IsPresentedIn(collection) << "\n";
+
+    auto placeable_collection = Placeable::CreateInstance();
+    std::cout << std::boolalpha << Placeable::IsPresentedIn(placeable_collection) << "\n";
+
+    auto id = EntityID::GetRootID();
+    std::cout << id.GetThreadID() << " " << id.GetTimePoint() << "\n";
+
+    EntityID i1{};
+    EntityID i2{};
+    std::cout << i1.GetThreadID() << " " << i1.GetTimePoint() << "\n";
+    std::cout << i2.GetThreadID() << " " << i2.GetTimePoint() << "\n";
+
+    std::ostringstream out;
+    std::hex(out);
+    out << i1.GetThreadID();
+    std::cout << "Hex " << out.str() << "\n";
+
   } catch (const std::exception& err) {
     std::cout << err.what() << "\n";
     return -1;

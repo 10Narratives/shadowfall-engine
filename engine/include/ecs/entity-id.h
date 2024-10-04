@@ -11,11 +11,11 @@ class EntityID final {
  public:
   EntityID();
 
-  [[nodiscard]] inline std::thread::id GetThreadID() const noexcept;
+  [[nodiscard]] std::thread::id GetThreadID() const noexcept;
 
-  [[nodiscard]] inline ecs_time_point GetTimePoint() const noexcept;
+  [[nodiscard]] ecs_time_point GetTimePoint() const noexcept;
 
-  [[nodiscard]] inline bool operator<=>(const EntityID& other) const noexcept = default;
+  [[nodiscard]] bool operator<=>(const EntityID& other) const noexcept = default;
 
   struct Hash {
    public:
