@@ -14,6 +14,8 @@ class EntityID final {
   // Retrieves root id
   static EntityID GetRootID() noexcept;
 
+  [[nodiscard]] bool operator<=>(const EntityID& entity_id) const = default;
+
   struct Hash final {
    public:
     [[nodiscard]] std::size_t operator()(const EntityID& id) const noexcept;
