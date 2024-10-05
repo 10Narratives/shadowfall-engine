@@ -5,9 +5,9 @@
 namespace engine::ecs {
 
 /**
- * @brief Base strucure for components in a entity-component-system (ECS).
+ * @brief Base structure for components in a entity-component-system (ECS).
  *
- * This strucure provides a base structure for all components. It includes
+ * This structure provides a base structure for all components. It includes
  * default constructors, destructors, and assignment operators.
  */
 struct ComponentBase {
