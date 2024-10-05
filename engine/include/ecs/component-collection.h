@@ -88,6 +88,11 @@ class ComponentCollection final {
   /** @} */  // end of ComponentCollection State Methods
 
   /**
+   * @name Component Manipulation Methods
+   * @{
+   */
+
+  /**
    * @brief Emplace a new component of type ComponentType into the collection.
    *
    * This method constructs a new component of the given type using the supplied arguments
@@ -207,7 +212,7 @@ std::weak_ptr<ComponentType> ComponentCollection::Get() const noexcept {
   std::shared_ptr<ComponentType> found_component{nullptr};
   auto iter = inner_components_.find(typeid(ComponentType));
   if (iter != inner_components_.end()) {
-    found_component = iter->second;
+    found_component = std::dynamic_pointer_cast<ComponentType>(iter->second);
   }
   return found_component;
 }
