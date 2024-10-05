@@ -35,6 +35,9 @@ struct MoveableMarker final : public TagComponent {};
 #include "ecs/component-collection.h"
 using engine::ecs::ComponentCollection;
 
+// TODO(narratives): Make test case with constructors and copy assignment.
+// TODO(narratives): Make more scenarios of testing.
+
 TEST_CASE("ComponentCollection Manipulation Methods") {
   ComponentCollection collection;
   SECTION("Method Emplace()") {
