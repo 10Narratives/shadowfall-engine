@@ -8,8 +8,6 @@
 
 #include "component-base.h"
 
-// TODO (narratives): Possibly improve code readability
-
 namespace engine::ecs {
 
 /**
