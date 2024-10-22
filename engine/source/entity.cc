@@ -1,4 +1,6 @@
 #include "ecs/entity.h"
+
+#include <utility>
 using engine::ecs::Entity;
 
 #include "ecs/entity-id.h"
@@ -30,3 +32,9 @@ void Entity::ForgetChildren() { children_ids_.clear(); }
 const ComponentCollection& Entity::GetComponents() const noexcept { return data_; }
 
 ComponentCollection& Entity::GetComponents() noexcept { return data_; }
+
+ComponentCollection Entity::CloneComponents() const noexcept { return data_; }
+
+void Entity::SetComponents(const ComponentCollection& new_data) { data_ = new_data; }
+
+void Entity::SetComponents(ComponentCollection&& new_data) { data_ = std::move(new_data); }
